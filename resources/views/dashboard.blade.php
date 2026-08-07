@@ -6,6 +6,10 @@
 
 @section('content')
     <div class="row g-4">
+
+        {{-- =========================
+             VENTAS DEL DÍA
+        ========================== --}}
         <div class="col-12 col-sm-6 col-xl-3">
             <article class="dashboard-card">
                 <div class="dashboard-card__icon">
@@ -17,11 +21,17 @@
                 </div>
 
                 <p class="dashboard-card__value">
-                    $0.00
+                    ${{ number_format(
+                        (float) $ventasHoy,
+                        2
+                    ) }}
                 </p>
             </article>
         </div>
 
+        {{-- =========================
+             GANANCIA DEL DÍA
+        ========================== --}}
         <div class="col-12 col-sm-6 col-xl-3">
             <article class="dashboard-card">
                 <div class="dashboard-card__icon">
@@ -33,11 +43,17 @@
                 </div>
 
                 <p class="dashboard-card__value">
-                    $0.00
+                    ${{ number_format(
+                        (float) $gananciaHoy,
+                        2
+                    ) }}
                 </p>
             </article>
         </div>
 
+        {{-- =========================
+             STOCK BAJO
+        ========================== --}}
         <div class="col-12 col-sm-6 col-xl-3">
             <article class="dashboard-card">
                 <div class="dashboard-card__icon">
@@ -49,11 +65,14 @@
                 </div>
 
                 <p class="dashboard-card__value">
-                    0
+                    {{ $productosStockBajo }}
                 </p>
             </article>
         </div>
 
+        {{-- =========================
+             PRODUCTO MÁS VENDIDO
+        ========================== --}}
         <div class="col-12 col-sm-6 col-xl-3">
             <article class="dashboard-card">
                 <div class="dashboard-card__icon">
@@ -64,41 +83,147 @@
                     Producto más vendido
                 </div>
 
-                <p class="dashboard-card__value fs-5">
-                    Sin datos
-                </p>
+                @if (
+                    $productoMasVendido
+                    && $productoMasVendido->producto
+                )
+                    <p class="dashboard-card__value fs-5 mb-1">
+                        {{ $productoMasVendido->producto->nombre }}
+                    </p>
+
+                    <small class="text-muted">
+                        {{ $productoMasVendido->total_vendido }}
+                        unidades vendidas
+                    </small>
+                @else
+                    <p class="dashboard-card__value fs-5">
+                        Sin datos
+                    </p>
+                @endif
             </article>
         </div>
 
+        {{-- =========================
+             GRÁFICA DE VENTAS
+        ========================== --}}
         <div class="col-12 col-xl-8">
             <section class="dashboard-panel">
-                <h2 class="dashboard-panel__title">
-                    Ventas de los últimos meses
-                </h2>
+                <div
+                    class="d-flex justify-content-between align-items-center mb-4"
+                >
+                    <h2 class="dashboard-panel__title mb-0">
+                        Ventas de los últimos 6 meses
+                    </h2>
 
-                <div class="empty-state">
-                    <i class="bi bi-bar-chart"></i>
+                    <i class="bi bi-bar-chart text-muted"></i>
+                </div>
 
-                    <div>
-                        La gráfica aparecerá cuando existan ventas registradas.
-                    </div>
+                @php
+                    $maximoVentas = max(
+                        1,
+                        (float) $ventasPorMes->max('total')
+                    );
+                @endphp
+
+                <div class="dashboard-chart">
+                    @foreach ($ventasPorMes as $mes)
+                        @php
+                            $porcentaje = (
+                                (float) $mes['total']
+                                / $maximoVentas
+                            ) * 100;
+                        @endphp
+
+                        <div class="dashboard-chart__column">
+                            <div class="dashboard-chart__value">
+                                @if ((float) $mes['total'] > 0)
+                                    ${{ number_format(
+                                        (float) $mes['total'],
+                                        0
+                                    ) }}
+                                @endif
+                            </div>
+
+                            <div class="dashboard-chart__track">
+                                <div
+                                    class="dashboard-chart__bar"
+                                    style="height: {{ max(
+                                        4,
+                                        $porcentaje
+                                    ) }}%;"
+                                    title="${{ number_format(
+                                        (float) $mes['total'],
+                                        2
+                                    ) }}"
+                                ></div>
+                            </div>
+
+                            <div class="dashboard-chart__label">
+                                {{ $mes['mes'] }}
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </section>
         </div>
 
+        {{-- =========================
+             VENTAS RECIENTES
+        ========================== --}}
         <div class="col-12 col-xl-4">
             <section class="dashboard-panel">
-                <h2 class="dashboard-panel__title">
-                    Ventas recientes
-                </h2>
+                <div
+                    class="d-flex justify-content-between align-items-center mb-3"
+                >
+                    <h2 class="dashboard-panel__title mb-0">
+                        Ventas recientes
+                    </h2>
 
-                <div class="empty-state">
-                    <i class="bi bi-receipt"></i>
-
-                    <div>
-                        Todavía no existen ventas.
-                    </div>
+                    <a
+                        href="{{ route('ventas.index') }}"
+                        class="small text-decoration-none"
+                    >
+                        Ver todas
+                    </a>
                 </div>
+
+                @forelse ($ventasRecientes as $venta)
+                    <a
+                        href="{{ route('ventas.show', $venta) }}"
+                        class="recent-sale"
+                    >
+                        <div class="recent-sale__icon">
+                            <i class="bi bi-receipt"></i>
+                        </div>
+
+                        <div class="recent-sale__information">
+                            <strong>
+                                {{ $venta->folio }}
+                            </strong>
+
+                            <small>
+                                {{ $venta->fecha_venta->format(
+                                    'd/m/Y H:i'
+                                ) }}
+                            </small>
+                        </div>
+
+                        <div class="recent-sale__amount">
+                            ${{ number_format(
+                                (float) $venta->total,
+                                2
+                            ) }}
+                        </div>
+                    </a>
+                @empty
+                    <div class="empty-state">
+                        <i class="bi bi-receipt"></i>
+
+                        <div>
+                            Todavía no existen ventas.
+                        </div>
+                    </div>
+                @endforelse
             </section>
         </div>
     </div>

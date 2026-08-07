@@ -5,6 +5,9 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventarioController;
+use App\Http\Controllers\VentaController;
+use App\Http\Controllers\DashboardController;
+
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [LoginController::class, 'create'])
@@ -30,6 +33,30 @@ Route::middleware('auth')->group(function (): void {
         [CategoriaController::class, 'restore']
     )->name('categorias.restore');
 
+
+// =========================
+// PUNTO DE VENTA
+// =========================
+
+Route::get(
+    '/ventas',
+    [VentaController::class, 'index']
+)->name('ventas.index');
+
+Route::get(
+    '/punto-venta',
+    [VentaController::class, 'create']
+)->name('ventas.create');
+
+Route::post(
+    '/punto-venta',
+    [VentaController::class, 'store']
+)->name('ventas.store');
+
+Route::get(
+    '/ventas/{venta}',
+    [VentaController::class, 'show']
+)->name('ventas.show');
 
     // =========================
     // RUTAS DE PRODUCTOS
@@ -67,8 +94,10 @@ Route::post(
     // DASHBOARD
     // =========================
 
-    Route::view('/dashboard', 'dashboard')
-        ->name('dashboard');
+    Route::get(
+    '/dashboard',
+    [DashboardController::class, 'index']
+)->name('dashboard');
 
 
     // =========================

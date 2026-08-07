@@ -52,14 +52,13 @@
                 </a>
 
                 @if (auth()->user()->esAdministrador() || auth()->user()->esCajero())
-                    <a
-                        href="#"
-                        class="sidebar-link disabled"
-                        aria-disabled="true"
-                    >
-                        <i class="bi bi-cart3"></i>
-                        <span>Punto de Venta</span>
-                    </a>
+                   <a
+    href="{{ route('ventas.create') }}"
+    class="sidebar-link {{ request()->routeIs('ventas.*') ? 'active' : '' }}"
+>
+    <i class="bi bi-cart3"></i>
+    <span>Punto de Venta</span>
+</a>
                 @endif
 
                 @if (auth()->user()->esAdministrador() || auth()->user()->esInventario())
