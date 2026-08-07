@@ -48,3 +48,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const description = document.getElementById('descripcion');
+    const counter = document.getElementById('descripcion-counter');
+
+    if (!description || !counter) {
+        return;
+    }
+
+    const updateCounter = () => {
+        counter.textContent = `${description.value.length} / 255`;
+    };
+
+    description.addEventListener('input', updateCounter);
+
+    updateCounter();
+});

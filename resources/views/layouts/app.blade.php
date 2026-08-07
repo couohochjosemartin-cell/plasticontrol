@@ -73,13 +73,12 @@
                     </a>
 
                     <a
-                        href="#"
-                        class="sidebar-link disabled"
-                        aria-disabled="true"
-                    >
+                        href="{{ route('categorias.index') }}"
+                        class="sidebar-link {{ request()->routeIs('categorias.*') ? 'active' : '' }}"
+                   >
                         <i class="bi bi-tags"></i>
                         <span>Categorías</span>
-                    </a>
+                   </a>
 
                     <a
                         href="#"
