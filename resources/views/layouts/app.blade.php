@@ -64,13 +64,12 @@
 
                 @if (auth()->user()->esAdministrador() || auth()->user()->esInventario())
                     <a
-                        href="#"
-                        class="sidebar-link disabled"
-                        aria-disabled="true"
+                        href="{{ route('productos.index') }}"
+                        class="sidebar-link {{ request()->routeIs('productos.*') ? 'active' : '' }}"
                     >
-                        <i class="bi bi-box-seam"></i>
-                        <span>Productos</span>
-                    </a>
+                       <i class="bi bi-box-seam"></i>
+                       <span>Productos</span>
+                   </a>
 
                     <a
                         href="{{ route('categorias.index') }}"
