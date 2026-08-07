@@ -20,3 +20,31 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.getElementById('app-sidebar');
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+    if (!sidebar || !sidebarToggle || !sidebarBackdrop) {
+        return;
+    }
+
+    const closeSidebar = () => {
+        sidebar.classList.remove('is-open');
+        sidebarBackdrop.classList.remove('is-visible');
+    };
+
+    sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('is-open');
+        sidebarBackdrop.classList.toggle('is-visible');
+    });
+
+    sidebarBackdrop.addEventListener('click', closeSidebar);
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 992) {
+            closeSidebar();
+        }
+    });
+});

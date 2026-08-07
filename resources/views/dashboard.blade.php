@@ -1,34 +1,105 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.app')
 
-    <title>Dashboard | {{ config('app.name') }}</title>
-</head>
+@section('title', 'Dashboard')
+@section('page-title', 'Dashboard')
+@section('page-subtitle', 'Resumen general de PlastiControl')
 
-<body>
-    <h1>Bienvenido a PlastiControl</h1>
+@section('content')
+    <div class="row g-4">
+        <div class="col-12 col-sm-6 col-xl-3">
+            <article class="dashboard-card">
+                <div class="dashboard-card__icon">
+                    <i class="bi bi-currency-dollar"></i>
+                </div>
 
-    <p>
-        Usuario: {{ auth()->user()->nombre_completo }}
-    </p>
+                <div class="dashboard-card__label">
+                    Ventas del día
+                </div>
 
-    <p>
-        Rol: {{ auth()->user()->rol->nombre }}
-    </p>
+                <p class="dashboard-card__value">
+                    $0.00
+                </p>
+            </article>
+        </div>
 
-    <p>
-        Último acceso:
-        {{ auth()->user()->ultimo_acceso_at?->format('d/m/Y H:i:s') }}
-    </p>
+        <div class="col-12 col-sm-6 col-xl-3">
+            <article class="dashboard-card">
+                <div class="dashboard-card__icon">
+                    <i class="bi bi-graph-up-arrow"></i>
+                </div>
 
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
+                <div class="dashboard-card__label">
+                    Ganancia del día
+                </div>
 
-        <button type="submit">
-            Cerrar sesión
-        </button>
-    </form>
-</body>
-</html>
+                <p class="dashboard-card__value">
+                    $0.00
+                </p>
+            </article>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-3">
+            <article class="dashboard-card">
+                <div class="dashboard-card__icon">
+                    <i class="bi bi-exclamation-triangle"></i>
+                </div>
+
+                <div class="dashboard-card__label">
+                    Productos con stock bajo
+                </div>
+
+                <p class="dashboard-card__value">
+                    0
+                </p>
+            </article>
+        </div>
+
+        <div class="col-12 col-sm-6 col-xl-3">
+            <article class="dashboard-card">
+                <div class="dashboard-card__icon">
+                    <i class="bi bi-trophy"></i>
+                </div>
+
+                <div class="dashboard-card__label">
+                    Producto más vendido
+                </div>
+
+                <p class="dashboard-card__value fs-5">
+                    Sin datos
+                </p>
+            </article>
+        </div>
+
+        <div class="col-12 col-xl-8">
+            <section class="dashboard-panel">
+                <h2 class="dashboard-panel__title">
+                    Ventas de los últimos meses
+                </h2>
+
+                <div class="empty-state">
+                    <i class="bi bi-bar-chart"></i>
+
+                    <div>
+                        La gráfica aparecerá cuando existan ventas registradas.
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-12 col-xl-4">
+            <section class="dashboard-panel">
+                <h2 class="dashboard-panel__title">
+                    Ventas recientes
+                </h2>
+
+                <div class="empty-state">
+                    <i class="bi bi-receipt"></i>
+
+                    <div>
+                        Todavía no existen ventas.
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+@endsection
