@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\InventarioController;
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [LoginController::class, 'create'])
@@ -44,6 +45,22 @@ Route::middleware('auth')->group(function (): void {
         '/productos/{producto}/restaurar',
         [ProductoController::class, 'restore']
     )->name('productos.restore');
+
+
+Route::get(
+    '/inventario',
+    [InventarioController::class, 'index']
+)->name('inventario.index');
+
+Route::get(
+    '/inventario/{inventario}',
+    [InventarioController::class, 'show']
+)->name('inventario.show');
+
+Route::post(
+    '/inventario/{inventario}/movimiento',
+    [InventarioController::class, 'movimiento']
+)->name('inventario.movimiento');
 
 
     // =========================

@@ -79,14 +79,14 @@
                         <span>Categorías</span>
                    </a>
 
-                    <a
-                        href="#"
-                        class="sidebar-link disabled"
-                        aria-disabled="true"
-                    >
-                        <i class="bi bi-clipboard-data"></i>
-                        <span>Inventario</span>
-                    </a>
+                   <a
+                       href="{{ route('inventario.index') }}"
+                       class="sidebar-link {{ request()->routeIs('inventario.*') ? 'active' : '' }}"
+                   >
+                       <i class="bi bi-clipboard-data"></i>
+                       <span>Inventario</span>
+                  </a>
+
                 @endif
 
                 @if (auth()->user()->esAdministrador())
