@@ -43,13 +43,13 @@ class Usuario extends Authenticatable
         return $this->belongsTo(Rol::class);
     }
 
-    public function creador(): BelongsTo
-    {
-        return $this->belongsTo(
-            Usuario::class,
-            'creado_por_id'
-        );
-    }
+    public function creadoPor()
+{
+    return $this->belongsTo(
+        Usuario::class,
+        'creado_por_id'
+    );
+}
 
     public function usuariosCreados(): HasMany
     {

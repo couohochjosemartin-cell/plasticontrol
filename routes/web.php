@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UsuarioController;
 
 
 Route::middleware('guest')->group(function (): void {
@@ -89,6 +90,16 @@ Route::post(
     [InventarioController::class, 'movimiento']
 )->name('inventario.movimiento');
 
+
+Route::resource(
+    'usuarios',
+    UsuarioController::class
+);
+
+Route::patch(
+    '/usuarios/{usuario}/restaurar',
+    [UsuarioController::class, 'restore']
+)->name('usuarios.restore');
 
     // =========================
     // DASHBOARD

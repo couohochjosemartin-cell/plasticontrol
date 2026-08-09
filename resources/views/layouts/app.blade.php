@@ -99,13 +99,12 @@
                     </a>
 
                     <a
-                        href="#"
-                        class="sidebar-link disabled"
-                        aria-disabled="true"
-                    >
-                        <i class="bi bi-people"></i>
-                        <span>Usuarios</span>
-                    </a>
+    href="{{ route('usuarios.index') }}"
+    class="sidebar-link {{ request()->routeIs('usuarios.*') ? 'active' : '' }}"
+>
+    <i class="bi bi-people"></i>
+    <span>Usuarios</span>
+</a>
 
                     <a
                         href="#"
