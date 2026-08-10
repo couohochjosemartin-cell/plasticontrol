@@ -1048,3 +1048,80 @@ body {
     max-height: 160px;
     object-fit: contain;
 }
+
+/* ========================================
+   REPORTES
+======================================== */
+
+.report-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.9rem;
+    min-height: 300px;
+    padding: 1rem 0 0;
+    overflow-x: auto;
+}
+
+.report-chart__column {
+    display: flex;
+    min-width: 58px;
+    flex: 1 0 58px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.report-chart__amount {
+    min-height: 24px;
+    margin-bottom: 0.45rem;
+    color: #687a89;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.report-chart__track {
+    position: relative;
+    width: 100%;
+    max-width: 54px;
+    height: 220px;
+    overflow: hidden;
+    background: #eef4f7;
+    border-radius: 0.7rem 0.7rem 0.25rem 0.25rem;
+}
+
+.report-chart__bar {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    min-height: 4px;
+    background: linear-gradient(
+        180deg,
+        #38a2d9,
+        #17518f
+    );
+    border-radius: 0.7rem 0.7rem 0.25rem 0.25rem;
+    transition:
+        height 0.35s ease,
+        opacity 0.2s ease;
+}
+
+.report-chart__bar:hover {
+    opacity: 0.82;
+}
+
+.report-chart__date {
+    margin-top: 0.65rem;
+    color: #748390;
+    font-size: 0.74rem;
+    font-weight: 600;
+}
+
+@media (max-width: 767.98px) {
+    .report-chart {
+        min-height: 245px;
+    }
+
+    .report-chart__track {
+        height: 170px;
+    }
+}

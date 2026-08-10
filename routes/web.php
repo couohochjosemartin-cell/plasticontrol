@@ -9,6 +9,7 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ConfiguracionController;
+use App\Http\Controllers\ReporteController;
 
 
 Route::middleware('guest')->group(function (): void {
@@ -122,6 +123,11 @@ Route::put(
     [DashboardController::class, 'index']
 )->name('dashboard');
 
+
+Route::get(
+    '/reportes',
+    [ReporteController::class, 'index']
+)->name('reportes.index');
 
     // =========================
     // CERRAR SESIÓN

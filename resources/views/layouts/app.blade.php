@@ -101,14 +101,14 @@
     @if (auth()->user()->esAdministrador())
 
         {{-- Reportes: todavía pendiente --}}
-        <a
-            href="#"
-            class="sidebar-link disabled"
-            aria-disabled="true"
-        >
-            <i class="bi bi-bar-chart-line"></i>
-            <span>Reportes</span>
-        </a>
+       
+ <a
+    href="{{ route('reportes.index') }}"
+    class="sidebar-link {{ request()->routeIs('reportes.*') ? 'active' : '' }}"
+>
+    <i class="bi bi-bar-chart-line"></i>
+    <span>Reportes</span>
+</a>
 
         {{-- Usuarios --}}
         <a
