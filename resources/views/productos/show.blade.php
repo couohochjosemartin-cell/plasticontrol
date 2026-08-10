@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="mt-3">
-                            @if ($producto->estado === 'Activo')
+                            @if (  $producto->estado === \App\Enums\EstadoProducto::ACTIVO)
                                 <span class="badge text-bg-success">
                                     Activo
                                 </span>

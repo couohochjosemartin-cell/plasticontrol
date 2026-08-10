@@ -219,7 +219,7 @@
 
                                 <td>
                                     <i class="bi bi-cash me-1"></i>
-                                    {{ $venta->metodo_pago }}
+                                    {{ $venta->metodo_pago->value  }}
                                 </td>
 
                                 <td class="text-end fw-semibold">
@@ -230,7 +230,7 @@
                                 </td>
 
                                 <td>
-                                    @if ($venta->estado === 'Completada')
+                                    @if ( $venta->estado === \App\Enums\EstadoVenta::COMPLETADA)
                                         <span class="badge text-bg-success">
                                             Completada
                                         </span>

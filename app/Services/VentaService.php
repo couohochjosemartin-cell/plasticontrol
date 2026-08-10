@@ -8,6 +8,11 @@ use App\Models\Usuario;
 use App\Models\Venta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use App\Enums\EstadoInventario;
+use App\Enums\EstadoProducto;
+use App\Enums\EstadoVenta;
+use App\Enums\MetodoPago;
+use App\Enums\TipoMovimiento;
 
 class VentaService
 {
@@ -22,7 +27,7 @@ class VentaService
 
                 foreach ($datos['productos'] as $item) {
                     $producto = Producto::query()
-                        ->where('estado', 'Activo')
+                        ->where('estado', EstadoProducto::ACTIVO->value)
                         ->whereNull('deleted_at')
                         ->find($item['id']);
 
@@ -81,13 +86,13 @@ class VentaService
                 $venta = Venta::create([
                     'folio' => $this->generarFolio(),
                     'usuario_id' => $usuario->id,
-                    'metodo_pago' => 'Efectivo',
+                    'metodo_pago' => MetodoPago::EFECTIVO,
                     'subtotal' => $subtotal,
                     'descuento' => $descuento,
                     'total' => $total,
                     'pago_recibido' => $pagoRecibido,
                     'cambio' => $cambio,
-                    'estado' => 'Completada',
+                    'estado' => EstadoVenta::COMPLETADA,
                     'fecha_venta' => now(),
                 ]);
 
@@ -116,7 +121,7 @@ class VentaService
 
                     $inventario->movimientos()->create([
                         'usuario_id' => $usuario->id,
-                        'tipo_movimiento' => 'Salida',
+                        'tipo_movimiento' => TipoMovimiento::SALIDA,
                         'cantidad' => $linea['cantidad'],
                         'stock_anterior' => $stockAnterior,
                         'stock_resultante' => $stockResultante,
@@ -152,15 +157,15 @@ class VentaService
     private function estadoInventario(
         int $stockActual,
         int $stockMinimo
-    ): string {
+    ): EstadoInventario {
         if ($stockActual === 0) {
-            return 'Agotado';
+            return EstadoInventario::AGOTADO;
         }
 
         if ($stockActual <= $stockMinimo) {
-            return 'Stock bajo';
+            return EstadoInventario::STOCK_BAJO;
         }
 
-        return 'Disponible';
+        return EstadoInventario::DISPONIBLE;
     }
 }

@@ -48,14 +48,14 @@
         >
             <option
                 value="Activa"
-                @selected(old('estado', $categoria?->estado ?? 'Activa') === 'Activa')
+                @selected(old('estado', $categoria?->estado?->value ?? 'Activa') === 'Activa')
             >
                 Activa
             </option>
 
             <option
                 value="Inactiva"
-                @selected(old('estado', $categoria?->estado) === 'Inactiva')
+                @selected(old('estado', $categoria?->estado?->value) === 'Inactiva')
             >
                 Inactiva
             </option>

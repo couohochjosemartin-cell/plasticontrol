@@ -238,7 +238,7 @@
                                         <span class="badge text-bg-danger">
                                             Eliminado
                                         </span>
-                                    @elseif ($producto->estado === 'Activo')
+                                   @elseif (   $producto->estado === \App\Enums\EstadoProducto::ACTIVO)
                                         <span class="badge text-bg-success">
                                             Activo
                                         </span>

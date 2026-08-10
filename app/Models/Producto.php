@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Enums\EstadoProducto;
 
 class Producto extends Model
 {
@@ -32,6 +33,7 @@ class Producto extends Model
             'precio_compra' => 'decimal:2',
             'precio_venta' => 'decimal:2',
             'stock_inicial' => 'integer',
+            'estado' => EstadoProducto::class,
         ];
     }
 
@@ -50,10 +52,10 @@ class Producto extends Model
         return $this->hasMany(DetalleVenta::class);
     }
 
-    public function estaActivo(): bool
-    {
-        return $this->estado === 'Activo';
-    }
+public function estaActivo(): bool
+{
+    return $this->estado === EstadoProducto::ACTIVO;
+}
 
     public function gananciaUnitaria(): float
     {

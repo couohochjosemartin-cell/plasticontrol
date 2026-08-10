@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Enums\TipoMovimiento;
 
 class MovimientoInventario extends Model
 {
@@ -29,6 +30,7 @@ class MovimientoInventario extends Model
             'stock_anterior' => 'integer',
             'stock_resultante' => 'integer',
             'fecha_movimiento' => 'datetime',
+            'tipo_movimiento' => TipoMovimiento::class,
         ];
     }
 
@@ -43,12 +45,12 @@ class MovimientoInventario extends Model
     }
 
     public function esEntrada(): bool
-    {
-        return $this->tipo_movimiento === 'Entrada';
-    }
+{
+    return $this->tipo_movimiento === TipoMovimiento::ENTRADA;
+}
 
-    public function esSalida(): bool
-    {
-        return $this->tipo_movimiento === 'Salida';
-    }
+public function esSalida(): bool
+{
+    return $this->tipo_movimiento === TipoMovimiento::SALIDA;
+}
 }

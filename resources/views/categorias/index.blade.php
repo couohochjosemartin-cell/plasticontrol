@@ -245,7 +245,7 @@
                                         <span class="badge text-bg-danger">
                                             Eliminada
                                         </span>
-                                    @elseif ($categoria->estado === 'Activa')
+                                    @elseif (  $categoria->estado === \App\Enums\EstadoCategoria::ACTIVA)
                                         <span class="badge text-bg-success">
                                             Activa
                                         </span>

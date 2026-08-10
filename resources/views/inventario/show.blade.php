@@ -40,11 +40,11 @@
                         </div>
 
                         <div>
-                            @if ($inventario->estado === 'Disponible')
+                            @if (  $inventario->estado === \App\Enums\EstadoInventario::DISPONIBLE)
                                 <span class="badge text-bg-success">
                                     Disponible
                                 </span>
-                            @elseif ($inventario->estado === 'Stock bajo')
+                            @elseif ($inventario->estado === \App\Enums\EstadoInventario::STOCK_BAJO)
                                 <span class="badge text-bg-warning">
                                     Stock bajo
                                 </span>
@@ -156,7 +156,7 @@
                                 </td>
 
                                 <td>
-                                    @if ($movimiento->tipo_movimiento === 'Entrada')
+                                    @if ($movimiento->tipo_movimiento === \App\Enums\TipoMovimiento::ENTRADA)
                                         <span class="badge text-bg-success">
                                             <i class="bi bi-arrow-down-left me-1"></i>
                                             Entrada

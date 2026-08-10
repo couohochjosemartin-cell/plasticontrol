@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Enums\EstadoInventario;
 
 class Inventario extends Model
 {
@@ -22,6 +23,7 @@ class Inventario extends Model
         return [
             'stock_actual' => 'integer',
             'stock_minimo' => 'integer',
+            'estado' => EstadoInventario::class,
         ];
     }
 

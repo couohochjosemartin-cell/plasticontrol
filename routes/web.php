@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\PerfilController;
 
 
 Route::middleware('guest')->group(function (): void {
@@ -21,6 +22,18 @@ Route::middleware('guest')->group(function (): void {
 });
 
 Route::middleware('auth')->group(function (): void {
+
+
+Route::get(
+    '/perfil/password',
+    [PerfilController::class, 'editPassword']
+)->name('perfil.password.edit');
+
+Route::put(
+    '/perfil/password',
+    [PerfilController::class, 'updatePassword']
+)->name('perfil.password.update');
+
 
     // =========================
     // RUTAS DE CATEGORÍAS

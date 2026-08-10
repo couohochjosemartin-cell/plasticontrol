@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Enums\EstadoUsuario;
 
 class Usuario extends Authenticatable
 {
@@ -30,13 +31,14 @@ class Usuario extends Authenticatable
         'remember_token',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'password' => 'hashed',
-            'ultimo_acceso_at' => 'datetime',
-        ];
-    }
+protected function casts(): array
+{
+    return [
+        'estado' => EstadoUsuario::class,
+        'ultimo_acceso_at' => 'datetime',
+        'deleted_at' => 'datetime',
+    ];
+}
 
     public function rol(): BelongsTo
     {
@@ -69,10 +71,10 @@ class Usuario extends Authenticatable
         return $this->hasMany(Venta::class);
     }
 
-    public function estaActivo(): bool
-    {
-        return $this->estado === 'Activo';
-    }
+public function estaActivo(): bool
+{
+    return $this->estado === EstadoUsuario::ACTIVO;
+}
 
     public function esAdministrador(): bool
     {

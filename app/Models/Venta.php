@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Enums\EstadoVenta;
+use App\Enums\MetodoPago;
 
 class Venta extends Model
 {
@@ -32,6 +34,8 @@ class Venta extends Model
             'pago_recibido' => 'decimal:2',
             'cambio' => 'decimal:2',
             'fecha_venta' => 'datetime',
+            'estado' => EstadoVenta::class,
+            'metodo_pago' => MetodoPago::class,
         ];
     }
 
@@ -46,7 +50,7 @@ class Venta extends Model
     }
 
     public function estaCompletada(): bool
-    {
-        return $this->estado === 'Completada';
-    }
+{
+    return $this->estado === EstadoVenta::COMPLETADA;
+}
 }

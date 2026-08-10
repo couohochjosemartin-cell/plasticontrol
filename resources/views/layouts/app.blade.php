@@ -208,6 +208,16 @@
                             </span>
                         </li>
 
+<li>
+    <a
+        href="{{ route('perfil.password.edit') }}"
+        class="dropdown-item"
+    >
+        <i class="bi bi-key me-2"></i>
+        Cambiar contraseña
+    </a>
+</li>
+
                         <li>
                             <hr class="dropdown-divider">
                         </li>

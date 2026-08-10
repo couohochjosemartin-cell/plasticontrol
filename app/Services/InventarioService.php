@@ -6,6 +6,8 @@ use App\Models\Inventario;
 use App\Models\Usuario;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use App\Enums\EstadoInventario;
+use App\Enums\TipoMovimiento;
 
 class InventarioService
 {
@@ -27,7 +29,7 @@ class InventarioService
                 $stockAnterior = $inventario->stock_actual;
                 $cantidad = (int) $datos['cantidad'];
 
-                if ($datos['tipo_movimiento'] === 'Entrada') {
+                if ($datos['tipo_movimiento'] === TipoMovimiento::ENTRADA->value) {
                     $stockResultante = $stockAnterior + $cantidad;
                 } else {
                     if ($cantidad > $stockAnterior) {
@@ -65,17 +67,17 @@ class InventarioService
     }
 
     private function estadoInventario(
-        int $stockActual,
-        int $stockMinimo
-    ): string {
-        if ($stockActual === 0) {
-            return 'Agotado';
-        }
-
-        if ($stockActual <= $stockMinimo) {
-            return 'Stock bajo';
-        }
-
-        return 'Disponible';
+    int $stockActual,
+    int $stockMinimo
+): EstadoInventario {
+    if ($stockActual === 0) {
+        return EstadoInventario::AGOTADO;
     }
+
+    if ($stockActual <= $stockMinimo) {
+        return EstadoInventario::STOCK_BAJO;
+    }
+
+    return EstadoInventario::DISPONIBLE;
+  }
 }

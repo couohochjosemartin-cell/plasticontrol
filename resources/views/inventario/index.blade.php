@@ -226,19 +226,25 @@
                                 </td>
 
                                 <td>
-                                    @if ($inventario->estado === 'Disponible')
-                                        <span class="badge text-bg-success">
-                                            Disponible
-                                        </span>
-                                    @elseif ($inventario->estado === 'Stock bajo')
-                                        <span class="badge text-bg-warning">
-                                            Stock bajo
-                                        </span>
-                                    @else
-                                        <span class="badge text-bg-danger">
-                                            Agotado
-                                        </span>
-                                    @endif
+                                   @if (
+    $inventario->estado === \App\Enums\EstadoInventario::DISPONIBLE
+)
+    <span class="badge text-bg-success">
+        Disponible
+    </span>
+
+@elseif (
+    $inventario->estado === \App\Enums\EstadoInventario::STOCK_BAJO
+)
+    <span class="badge text-bg-warning">
+        Stock bajo
+    </span>
+
+@else
+    <span class="badge text-bg-danger">
+        Agotado
+    </span>
+@endif
                                 </td>
 
                                 <td>

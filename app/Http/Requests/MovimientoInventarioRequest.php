@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Enums\TipoMovimiento;
 
 class MovimientoInventarioRequest extends FormRequest
 {
@@ -18,7 +19,7 @@ class MovimientoInventarioRequest extends FormRequest
         return [
             'tipo_movimiento' => [
                 'required',
-                Rule::in(['Entrada', 'Salida']),
+                Rule::enum(TipoMovimiento::class),
             ],
 
             'cantidad' => [

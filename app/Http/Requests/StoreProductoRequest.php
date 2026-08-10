@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Enums\EstadoProducto;
 
 class StoreProductoRequest extends FormRequest
 {
@@ -69,7 +70,7 @@ class StoreProductoRequest extends FormRequest
 
             'estado' => [
                 'required',
-                Rule::in(['Activo', 'Inactivo']),
+                Rule::enum(EstadoProducto::class),
             ],
         ];
     }

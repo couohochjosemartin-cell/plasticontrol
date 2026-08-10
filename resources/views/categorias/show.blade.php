@@ -30,7 +30,7 @@
             <div class="module-card__header">
                 <div>
                     <span
-                        class="badge {{ $categoria->estado === 'Activa' ? 'text-bg-success' : 'text-bg-secondary' }} mb-2"
+                        class="badge {{ $categoria->estado === \App\Enums\EstadoCategoria::ACTIVA ? 'text-bg-success': 'text-bg-secondary' }}" mb-2"
                     >
                         {{ $categoria->estado }}
                     </span>

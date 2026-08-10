@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Enums\EstadoCategoria;
 
 class StoreCategoriaRequest extends FormRequest
 {
@@ -28,7 +29,7 @@ class StoreCategoriaRequest extends FormRequest
             ],
             'estado' => [
                 'required',
-                Rule::in(['Activa', 'Inactiva']),
+                Rule::enum(EstadoCategoria::class),
             ],
         ];
     }
