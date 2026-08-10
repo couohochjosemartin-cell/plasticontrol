@@ -42,80 +42,95 @@
                 </div>
             </div>
 
-            <nav class="sidebar-nav">
-                <a
-                    href="{{ route('dashboard') }}"
-                    class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
-                >
-                    <i class="bi bi-grid-1x2-fill"></i>
-                    <span>Dashboard</span>
-                </a>
+<nav class="sidebar-nav">
 
-                @if (auth()->user()->esAdministrador() || auth()->user()->esCajero())
-                   <a
-    href="{{ route('ventas.create') }}"
-    class="sidebar-link {{ request()->routeIs('ventas.*') ? 'active' : '' }}"
->
-    <i class="bi bi-cart3"></i>
-    <span>Punto de Venta</span>
-</a>
-                @endif
+    {{-- Dashboard --}}
+    <a
+        href="{{ route('dashboard') }}"
+        class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+    >
+        <i class="bi bi-grid-1x2-fill"></i>
+        <span>Dashboard</span>
+    </a>
 
-                @if (auth()->user()->esAdministrador() || auth()->user()->esInventario())
-                    <a
-                        href="{{ route('productos.index') }}"
-                        class="sidebar-link {{ request()->routeIs('productos.*') ? 'active' : '' }}"
-                    >
-                       <i class="bi bi-box-seam"></i>
-                       <span>Productos</span>
-                   </a>
+    {{-- Punto de Venta --}}
+    @if (
+        auth()->user()->esAdministrador()
+        || auth()->user()->esCajero()
+    )
+        <a
+            href="{{ route('ventas.create') }}"
+            class="sidebar-link {{ request()->routeIs('ventas.*') ? 'active' : '' }}"
+        >
+            <i class="bi bi-cart3"></i>
+            <span>Punto de Venta</span>
+        </a>
+    @endif
 
-                    <a
-                        href="{{ route('categorias.index') }}"
-                        class="sidebar-link {{ request()->routeIs('categorias.*') ? 'active' : '' }}"
-                   >
-                        <i class="bi bi-tags"></i>
-                        <span>Categorías</span>
-                   </a>
+    {{-- Productos / Categorías / Inventario --}}
+    @if (
+        auth()->user()->esAdministrador()
+        || auth()->user()->esInventario()
+    )
+        <a
+            href="{{ route('productos.index') }}"
+            class="sidebar-link {{ request()->routeIs('productos.*') ? 'active' : '' }}"
+        >
+            <i class="bi bi-box-seam"></i>
+            <span>Productos</span>
+        </a>
 
-                   <a
-                       href="{{ route('inventario.index') }}"
-                       class="sidebar-link {{ request()->routeIs('inventario.*') ? 'active' : '' }}"
-                   >
-                       <i class="bi bi-clipboard-data"></i>
-                       <span>Inventario</span>
-                  </a>
+        <a
+            href="{{ route('categorias.index') }}"
+            class="sidebar-link {{ request()->routeIs('categorias.*') ? 'active' : '' }}"
+        >
+            <i class="bi bi-tags"></i>
+            <span>Categorías</span>
+        </a>
 
-                @endif
+        <a
+            href="{{ route('inventario.index') }}"
+            class="sidebar-link {{ request()->routeIs('inventario.*') ? 'active' : '' }}"
+        >
+            <i class="bi bi-clipboard-data"></i>
+            <span>Inventario</span>
+        </a>
+    @endif
 
-                @if (auth()->user()->esAdministrador())
-                    <a
-                        href="#"
-                        class="sidebar-link disabled"
-                        aria-disabled="true"
-                    >
-                        <i class="bi bi-bar-chart-line"></i>
-                        <span>Reportes</span>
-                    </a>
+    {{-- Solo Administrador --}}
+    @if (auth()->user()->esAdministrador())
 
-                    <a
-    href="{{ route('usuarios.index') }}"
-    class="sidebar-link {{ request()->routeIs('usuarios.*') ? 'active' : '' }}"
->
-    <i class="bi bi-people"></i>
-    <span>Usuarios</span>
-</a>
+        {{-- Reportes: todavía pendiente --}}
+        <a
+            href="#"
+            class="sidebar-link disabled"
+            aria-disabled="true"
+        >
+            <i class="bi bi-bar-chart-line"></i>
+            <span>Reportes</span>
+        </a>
 
-                    <a
-                        href="#"
-                        class="sidebar-link disabled"
-                        aria-disabled="true"
-                    >
-                        <i class="bi bi-gear"></i>
-                        <span>Configuración</span>
-                    </a>
-                @endif
-            </nav>
+        {{-- Usuarios --}}
+        <a
+            href="{{ route('usuarios.index') }}"
+            class="sidebar-link {{ request()->routeIs('usuarios.*') ? 'active' : '' }}"
+        >
+            <i class="bi bi-people"></i>
+            <span>Usuarios</span>
+        </a>
+
+        {{-- Configuración --}}
+        <a
+            href="{{ route('configuracion.edit') }}"
+            class="sidebar-link {{ request()->routeIs('configuracion.*') ? 'active' : '' }}"
+        >
+            <i class="bi bi-gear"></i>
+            <span>Configuración</span>
+        </a>
+
+    @endif
+
+</nav>
 
             <div class="sidebar-footer">
                 <div>

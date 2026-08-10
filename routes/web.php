@@ -8,6 +8,7 @@ use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ConfiguracionController;
 
 
 Route::middleware('guest')->group(function (): void {
@@ -100,6 +101,17 @@ Route::patch(
     '/usuarios/{usuario}/restaurar',
     [UsuarioController::class, 'restore']
 )->name('usuarios.restore');
+
+
+Route::get(
+    '/configuracion',
+    [ConfiguracionController::class, 'edit']
+)->name('configuracion.edit');
+
+Route::put(
+    '/configuracion',
+    [ConfiguracionController::class, 'update']
+)->name('configuracion.update');
 
     // =========================
     // DASHBOARD
