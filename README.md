@@ -1,59 +1,297 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PlastiControl
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Sistema web para la administración de una tienda de productos plásticos, desarrollado con Laravel.
 
-## About Laravel
+PlastiControl permite gestionar productos, categorías, inventario, ventas, usuarios, reportes y configuración general del sistema desde una interfaz centralizada.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Funcionalidades principales
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Autenticación y usuarios
 
-## Learning Laravel
+- Inicio y cierre de sesión.
+- Control de acceso mediante roles.
+- Administración de usuarios.
+- Activación e inactivación de usuarios.
+- Cambio de contraseña.
+- Registro del último acceso.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Categorías
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Registro y edición de categorías.
+- Activación e inactivación.
+- Eliminación lógica y restauración.
+- Asociación con productos.
 
-## Laravel Sponsors
+### Productos
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- Registro y edición de productos.
+- Generación automática de códigos.
+- Manejo de imágenes.
+- Asociación con categorías.
+- Control de estado.
+- Eliminación lógica y restauración.
+- Creación automática del inventario inicial.
 
-### Premium Partners
+### Inventario
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- Consulta de existencias.
+- Entradas y salidas manuales.
+- Historial de movimientos.
+- Control de stock mínimo.
+- Estados de inventario:
+  - Disponible.
+  - Stock bajo.
+  - Agotado.
+- Validación para impedir salidas superiores al stock disponible.
 
-## Contributing
+### Punto de venta
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Selección de productos disponibles.
+- Registro de múltiples productos por venta.
+- Cálculo automático de subtotal.
+- Aplicación de descuentos.
+- Cálculo de total y cambio.
+- Validación de pago recibido.
+- Descuento automático del inventario.
+- Registro de movimientos de inventario asociados a la venta.
+- Generación de folio único.
+- Generación de ticket de venta.
 
-## Code of Conduct
+### Dashboard
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Incluye información resumida del funcionamiento del negocio, como:
 
-## Security Vulnerabilities
+- Ventas del día.
+- Ganancia estimada.
+- Productos con stock bajo.
+- Producto más vendido.
+- Ventas recientes.
+- Ventas por mes.
+- Ventas de la semana.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Reportes
 
-## License
+Permite consultar información dentro de un rango de fechas:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Número de ventas.
+- Ingresos.
+- Descuentos.
+- Ganancia estimada.
+- Ticket promedio.
+- Unidades vendidas.
+- Productos más vendidos.
+- Ventas por usuario.
+- Ventas por día.
+- Resumen de inventario.
+- Historial de ventas.
+
+Los reportes pueden generarse en formato PDF.
+
+### Configuración
+
+Permite administrar información general del sistema y realizar respaldos de la base de datos.
+
+El sistema cuenta con:
+
+- Configuración general.
+- Logo del negocio.
+- Información de versión.
+- Creación manual de respaldos SQL.
+- Verificación de restauración de respaldos.
+
+---
+
+## Tecnologías utilizadas
+
+- PHP
+- Laravel 12
+- MySQL
+- Blade
+- Bootstrap
+- JavaScript
+- Composer
+- DOMPDF
+- Git
+
+---
+
+## Base de datos
+
+PlastiControl utiliza MySQL.
+
+Entre las tablas principales se encuentran:
+
+- `roles`
+- `usuarios`
+- `categorias`
+- `productos`
+- `inventarios`
+- `movimientos_inventario`
+- `ventas`
+- `detalles_venta`
+- `configuraciones`
+
+Las relaciones, restricciones e índices se administran mediante migraciones de Laravel.
+
+---
+
+## Instalación
+
+### 1. Clonar el repositorio
+
+```bash
+git clone <URL_DEL_REPOSITORIO>
+cd plasticontrol
+```
+
+### 2. Instalar dependencias
+
+```bash
+composer install
+```
+
+### 3. Crear el archivo de entorno
+
+En Windows:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+### 4. Generar la clave de Laravel
+
+```bash
+php artisan key:generate
+```
+
+### 5. Configurar la base de datos
+
+Modificar las siguientes variables en `.env` según el entorno:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=plasticontrol
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 6. Ejecutar migraciones
+
+```bash
+php artisan migrate
+```
+
+### 7. Crear el enlace de almacenamiento
+
+```bash
+php artisan storage:link
+```
+
+### 8. Iniciar el servidor
+
+```bash
+php artisan serve
+```
+
+---
+
+## Respaldos
+
+Los respaldos de la base de datos se generan utilizando `mysqldump`.
+
+En el entorno de desarrollo utilizado para el proyecto, el ejecutable corresponde a MySQL incluido con WampServer.
+
+Los archivos generados se almacenan en:
+
+```text
+storage/app/backups
+```
+
+La restauración de los respaldos fue verificada utilizando una base de datos independiente de prueba antes de considerar esta funcionalidad terminada.
+
+---
+
+## Generación de PDF
+
+PlastiControl utiliza:
+
+```text
+barryvdh/laravel-dompdf
+```
+
+para generar documentos PDF desde los reportes del sistema.
+
+---
+
+## Pruebas
+
+El proyecto cuenta con pruebas automatizadas para funcionalidades críticas, incluyendo:
+
+- Autenticación.
+- Restricción de usuarios inactivos.
+- Productos.
+- Generación automática de códigos.
+- Inventario.
+- Entradas y salidas de stock.
+- Validación de stock insuficiente.
+- Ventas.
+- Validación de pagos.
+- Rollback de transacciones.
+
+Para ejecutar las pruebas:
+
+```bash
+php artisan test
+```
+
+Al cierre de la Etapa 3, la suite cuenta con:
+
+```text
+19 tests
+64 assertions
+0 failures
+```
+
+---
+
+## Seguridad e integridad
+
+PlastiControl implementa diferentes mecanismos para proteger la integridad de la información:
+
+- Autenticación mediante Laravel.
+- Autorización según roles.
+- Validación mediante Form Requests.
+- Contraseñas cifradas.
+- Transacciones de base de datos.
+- Bloqueo de registros de inventario durante operaciones críticas.
+- Validación de existencias.
+- Soft Deletes en módulos correspondientes.
+- Restricciones mediante claves foráneas.
+- Rollback automático ante errores en operaciones críticas.
+
+---
+
+## Estado del proyecto
+
+### Etapa 1
+Estructura inicial y preparación del proyecto.
+
+### Etapa 2
+Implementación de los módulos principales del sistema.
+
+### Etapa 3
+Mejoras operativas, reportes PDF, tickets, respaldos, validaciones, optimización y pruebas automatizadas.
+
+**Estado actual: Etapa 3 finalizada.**
+
+---
+
+## Proyecto
+
+**PlastiControl**
+
+Sistema de gestión, inventario y punto de venta para tienda de productos plásticos.
