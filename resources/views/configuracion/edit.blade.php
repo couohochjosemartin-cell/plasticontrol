@@ -377,57 +377,74 @@
                     </div>
                 </div>
 
-                {{-- Información del sistema --}}
+                {{-- Respaldo del sistema --}}
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-4">
 
                         <div class="d-flex align-items-center gap-3 mb-4">
                             <div class="config-icon">
-                                <i class="bi bi-info-circle"></i>
+                                <i class="bi bi-database-check"></i>
                             </div>
 
                             <div>
                                 <h5 class="fw-bold mb-1">
-                                    Información del sistema
+                                    Respaldo del sistema
                                 </h5>
 
                                 <p class="text-muted mb-0">
-                                    Datos técnicos de PlastiControl.
+                                    Crea una copia de seguridad de
+                                    la base de datos de PlastiControl.
                                 </p>
                             </div>
                         </div>
 
-                        <div class="config-info-row">
-                            <span>Aplicación</span>
-                            <strong>PlastiControl</strong>
-                        </div>
+                        @if ($ultimoRespaldo)
 
-                        <div class="config-info-row">
-                            <span>Versión</span>
-                            <strong>
-                                {{ $configuracion->version }}
-                            </strong>
-                        </div>
+                            <div class="config-info-row">
+                                <span>Último respaldo</span>
 
-                        <div class="config-info-row">
-                            <span>Desarrollador</span>
-                            <strong class="text-end">
-                                {{ $configuracion->desarrollador }}
-                            </strong>
-                        </div>
+                                <strong class="text-end">
+                                    {{ $ultimoRespaldo['fecha'] }}
+                                </strong>
+                            </div>
 
-                        <div class="config-info-row border-0 pb-0">
-                            <span>Última actualización</span>
+                            <div class="config-info-row">
+                                <span>Archivo</span>
 
-                            <strong>
-                                {{ $configuracion->ultima_actualizacion
-                                    ? $configuracion
-                                        ->ultima_actualizacion
-                                        ->format('d/m/Y')
-                                    : 'Sin registro'
-                                }}
-                            </strong>
-                        </div>
+                                <strong class="text-end small">
+                                    {{ $ultimoRespaldo['nombre'] }}
+                                </strong>
+                            </div>
+
+                            <div class="config-info-row border-0">
+                                <span>Tamaño</span>
+
+                                <strong>
+                                    {{ number_format(
+                                        $ultimoRespaldo['tamano'] / 1024,
+                                        2
+                                    ) }}
+                                    KB
+                                </strong>
+                            </div>
+
+                        @else
+
+                            <div class="alert alert-light border small">
+                                <i class="bi bi-info-circle me-2"></i>
+                                Todavía no existe ningún respaldo.
+                            </div>
+
+                        @endif
+
+                        <button
+                            type="submit"
+                            form="backup-form"
+                            class="btn btn-outline-primary w-100"
+                        >
+                            <i class="bi bi-database-add me-2"></i>
+                            Crear respaldo ahora
+                        </button>
 
                     </div>
                 </div>
@@ -459,8 +476,19 @@
 
     </form>
 
+        </form>
+
+    <form
+        id="backup-form"
+        method="POST"
+        action="{{ route('configuracion.backup') }}"
+    >
+        @csrf
+    </form>
+
 </div>
 @endsection
+
 
 @push('styles')
 <style>

@@ -167,64 +167,171 @@
             </section>
         </div>
 
-        {{-- =========================
-             VENTAS RECIENTES
-        ========================== --}}
-        <div class="col-12 col-xl-4">
-            <section class="dashboard-panel">
-                <div
-                    class="d-flex justify-content-between align-items-center mb-3"
-                >
-                    <h2 class="dashboard-panel__title mb-0">
-                        Ventas recientes
-                    </h2>
+       {{-- =========================
+     VENTAS RECIENTES
+========================== --}}
+<div class="col-12 col-xl-4">
+    <section class="dashboard-panel">
+        <div
+            class="d-flex justify-content-between align-items-center mb-3"
+        >
+            <h2 class="dashboard-panel__title mb-0">
+                Ventas recientes
+            </h2>
 
-                    <a
-                        href="{{ route('ventas.index') }}"
-                        class="small text-decoration-none"
-                    >
-                        Ver todas
-                    </a>
+            <a
+                href="{{ route('ventas.index') }}"
+                class="small text-decoration-none"
+            >
+                Ver todas
+            </a>
+        </div>
+
+        @forelse ($ventasRecientes as $venta)
+            <a
+                href="{{ route('ventas.show', $venta) }}"
+                class="recent-sale"
+            >
+                <div class="recent-sale__icon">
+                    <i class="bi bi-receipt"></i>
                 </div>
 
-                @forelse ($ventasRecientes as $venta)
-                    <a
-                        href="{{ route('ventas.show', $venta) }}"
-                        class="recent-sale"
-                    >
-                        <div class="recent-sale__icon">
-                            <i class="bi bi-receipt"></i>
-                        </div>
+                <div class="recent-sale__information">
+                    <strong>
+                        {{ $venta->folio }}
+                    </strong>
 
-                        <div class="recent-sale__information">
-                            <strong>
-                                {{ $venta->folio }}
-                            </strong>
+                    <small>
+                        {{ $venta->fecha_venta->format(
+                            'd/m/Y H:i'
+                        ) }}
+                    </small>
+                </div>
 
-                            <small>
-                                {{ $venta->fecha_venta->format(
-                                    'd/m/Y H:i'
-                                ) }}
-                            </small>
-                        </div>
+                <div class="recent-sale__amount">
+                    ${{ number_format(
+                        (float) $venta->total,
+                        2
+                    ) }}
+                </div>
+            </a>
+        @empty
+            <div class="empty-state">
+                <i class="bi bi-receipt"></i>
 
-                        <div class="recent-sale__amount">
-                            ${{ number_format(
-                                (float) $venta->total,
-                                2
-                            ) }}
-                        </div>
-                    </a>
-                @empty
-                    <div class="empty-state">
-                        <i class="bi bi-receipt"></i>
+                <div>
+                    Todavía no existen ventas.
+                </div>
+            </div>
+        @endforelse
+    </section>
+</div>
 
-                        <div>
-                            Todavía no existen ventas.
-                        </div>
-                    </div>
-                @endforelse
-            </section>
+{{-- =========================
+     VENTAS DE LA SEMANA
+========================== --}}
+<div class="col-12">
+    <section class="dashboard-panel">
+
+        <div
+            class="d-flex justify-content-between
+                   align-items-center mb-4"
+        >
+            <div>
+                <h2 class="dashboard-panel__title mb-1">
+                    Ventas de la semana
+                </h2>
+
+                <small class="text-muted">
+                    Ingresos diarios de lunes a domingo
+                </small>
+            </div>
+
+            <i
+                class="bi bi-calendar-week
+                       text-muted fs-5"
+            ></i>
         </div>
+
+        @php
+            $maximoSemana = max(
+                1,
+                (float) $ventasSemana->max('total')
+            );
+
+            $totalSemana = (float)
+                $ventasSemana->sum('total');
+        @endphp
+
+        <div
+            class="d-flex justify-content-between
+                   align-items-center mb-3"
+        >
+            <span class="text-muted">
+                Total semanal
+            </span>
+
+            <strong class="fs-5">
+                ${{ number_format(
+                    $totalSemana,
+                    2
+                ) }}
+            </strong>
+        </div>
+
+        <div class="dashboard-chart">
+
+            @foreach ($ventasSemana as $dia)
+
+                @php
+                    $porcentaje = (
+                        (float) $dia['total']
+                        / $maximoSemana
+                    ) * 100;
+                @endphp
+
+                <div class="dashboard-chart__column">
+
+                    <div class="dashboard-chart__value">
+                        @if ((float) $dia['total'] > 0)
+                            ${{ number_format(
+                                (float) $dia['total'],
+                                0
+                            ) }}
+                        @endif
+                    </div>
+
+                    <div class="dashboard-chart__track">
+                        <div
+                            class="dashboard-chart__bar"
+                            style="height: {{
+                                max(4, $porcentaje)
+                            }}%;"
+                            title="${{
+                                number_format(
+                                    (float) $dia['total'],
+                                    2
+                                )
+                            }}"
+                        ></div>
+                    </div>
+
+                    <div class="dashboard-chart__label">
+                        {{ $dia['dia'] }}
+                    </div>
+
+                    <small class="text-muted">
+                        {{ $dia['fecha'] }}
+                    </small>
+
+                </div>
+
+            @endforeach
+
+        </div>
+
+    </section>
+</div>
+
     </div>
 @endsection

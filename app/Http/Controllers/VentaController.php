@@ -17,6 +17,27 @@ class VentaController extends Controller
     ) {
     }
 
+public function ticket(Venta $venta): View
+{
+    $this->authorize('view', $venta);
+
+    $venta->load([
+        'usuario',
+        'detalles.producto',
+    ]);
+
+    $configuracion = \App\Models\Configuracion::query()
+        ->first();
+
+    return view(
+        'ventas.ticket',
+        compact(
+            'venta',
+            'configuracion'
+        )
+    );
+}
+
 public function index(Request $request): View
 {
     $this->authorize('viewAny', Venta::class);

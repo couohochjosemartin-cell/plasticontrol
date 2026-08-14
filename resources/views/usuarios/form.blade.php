@@ -101,35 +101,35 @@
         </label>
 
         <select
-            id="estado"
-            name="estado"
-            class="form-select @error('estado') is-invalid @enderror"
-            required
-        >
-            <option
-                value="Activo"
-                @selected(
-                    old(
-                        'estado',
-                        $usuario?->estado ?? 'Activo'
-                    ) === 'Activo'
-                )
-            >
-                Activo
-            </option>
+    id="estado"
+    name="estado"
+    class="form-select @error('estado') is-invalid @enderror"
+    required
+>
+    <option
+        value="Activo"
+        @selected(
+            old(
+                'estado',
+                $usuario?->estado?->value ?? 'Activo'
+            ) === 'Activo'
+        )
+    >
+        Activo
+    </option>
 
-            <option
-                value="Inactivo"
-                @selected(
-                    old(
-                        'estado',
-                        $usuario?->estado
-                    ) === 'Inactivo'
-                )
-            >
-                Inactivo
-            </option>
-        </select>
+    <option
+        value="Inactivo"
+        @selected(
+            old(
+                'estado',
+                $usuario?->estado?->value
+            ) === 'Inactivo'
+        )
+    >
+        Inactivo
+    </option>
+</select>
 
         @error('estado')
             <div class="invalid-feedback">

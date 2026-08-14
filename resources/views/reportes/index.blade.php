@@ -7,6 +7,17 @@
 @section('content')
     <div class="module-container">
 
+<a
+    href="{{ route('reportes.pdf', [
+        'fecha_desde' => $fechaDesde,
+        'fecha_hasta' => $fechaHasta,
+    ]) }}"
+    class="btn btn-outline-danger"
+>
+    <i class="bi bi-file-earmark-pdf me-2"></i>
+    Exportar PDF
+</a>
+
         {{-- =========================
              FILTRO POR PERIODO
         ========================== --}}

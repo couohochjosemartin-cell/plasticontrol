@@ -49,6 +49,15 @@
                 <i class="bi bi-grid me-2"></i>
                 Dashboard
             </a>
+
+<a
+    href="{{ route('ventas.ticket', $venta) }}"
+    class="btn btn-primary"
+    target="_blank"
+>
+    <i class="bi bi-printer me-2"></i>
+    Imprimir ticket
+</a>
         </div>
 
         <div class="row g-4">

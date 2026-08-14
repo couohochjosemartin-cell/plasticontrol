@@ -74,6 +74,10 @@ Route::get(
     [VentaController::class, 'show']
 )->name('ventas.show');
 
+Route::get(
+    '/ventas/{venta}/ticket',
+    [VentaController::class, 'ticket']
+)->name('ventas.ticket');
     // =========================
     // RUTAS DE PRODUCTOS
     // AQUÍ DEBES PEGARLAS
@@ -127,6 +131,11 @@ Route::put(
     [ConfiguracionController::class, 'update']
 )->name('configuracion.update');
 
+Route::post(
+    '/configuracion/respaldo',
+    [ConfiguracionController::class, 'backup']
+)->name('configuracion.backup');
+
     // =========================
     // DASHBOARD
     // =========================
@@ -141,6 +150,11 @@ Route::get(
     '/reportes',
     [ReporteController::class, 'index']
 )->name('reportes.index');
+
+Route::get(
+    '/reportes/pdf',
+    [ReporteController::class, 'pdf']
+)->name('reportes.pdf');
 
     // =========================
     // CERRAR SESIÓN

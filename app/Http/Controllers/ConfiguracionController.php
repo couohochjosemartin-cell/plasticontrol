@@ -4,27 +4,71 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateConfiguracionRequest;
 use App\Models\Configuracion;
+use App\Services\BackupService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Throwable;
 
 class ConfiguracionController extends Controller
 {
     public function edit(): View
-    {
-        abort_unless(
-            auth()->user()?->esAdministrador(),
-            403
+{
+    abort_unless(
+        auth()->user()?->esAdministrador(),
+        403
+    );
+
+    $configuracion = Configuracion::query()
+        ->firstOrFail();
+
+    $directorioRespaldos = storage_path(
+        'app/backups'
+    );
+
+    $ultimoRespaldo = null;
+
+    if (is_dir($directorioRespaldos)) {
+        $archivos = glob(
+            $directorioRespaldos
+            . DIRECTORY_SEPARATOR
+            . '*.sql'
         );
 
-        $configuracion = Configuracion::query()
-            ->firstOrFail();
+        if ($archivos) {
+            usort(
+                $archivos,
+                fn (
+                    string $a,
+                    string $b
+                ): int => filemtime($b) <=> filemtime($a)
+            );
 
-        return view(
-            'configuracion.edit',
-            compact('configuracion')
-        );
+            $ultimoArchivo = $archivos[0];
+
+            $ultimoRespaldo = [
+                'nombre' => basename($ultimoArchivo),
+
+                'fecha' => date(
+                    'd/m/Y H:i',
+                    filemtime($ultimoArchivo)
+                ),
+
+                'tamano' => filesize(
+                    $ultimoArchivo
+                ),
+            ];
+        }
     }
+
+    return view(
+        'configuracion.edit',
+        compact(
+            'configuracion',
+            'ultimoRespaldo'
+        )
+    );
+}
 
     public function update(
         UpdateConfiguracionRequest $request
@@ -35,6 +79,7 @@ class ConfiguracionController extends Controller
         $datos = $request->validated();
 
         $logo = $datos['logo'] ?? null;
+
         $eliminarLogo = (bool) (
             $datos['eliminar_logo'] ?? false
         );
@@ -78,5 +123,35 @@ class ConfiguracionController extends Controller
                 'estado',
                 'Configuración actualizada correctamente.'
             );
+    }
+
+    public function backup(
+        BackupService $backupService
+    ): RedirectResponse {
+        abort_unless(
+            auth()->user()?->esAdministrador(),
+            403
+        );
+
+        try {
+            $ruta = $backupService->crearRespaldo();
+
+            return redirect()
+                ->route('configuracion.edit')
+                ->with(
+                    'estado',
+                    'Respaldo creado correctamente: '
+                    . basename($ruta)
+                );
+        } catch (Throwable $exception) {
+            report($exception);
+
+            return redirect()
+                ->route('configuracion.edit')
+                ->withErrors([
+                    'backup' =>
+                        'No fue posible crear el respaldo del sistema.',
+                ]);
+        }
     }
 }
